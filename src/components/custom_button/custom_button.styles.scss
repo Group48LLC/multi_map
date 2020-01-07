@@ -1,0 +1,26 @@
+.custom-button {
+    display:flex;
+    justify-content: center;
+    min-width:1em;
+    width:auto;
+    cursor: pointer;
+    background-color: orangered;
+    color: white;
+    border:none;
+    padding:.25em;
+    font-family: 'Open Sans Condensed';
+    font-weight: bolder;
+    font-size: 1em;
+
+    &:hover{
+        background-color: rgb(49, 222, 245);
+    }
+
+    &.inverted {
+        background-color: rgb(49, 222, 245);
+
+        &:hover{
+            background-color: orangered;
+        }
+    }
+}
