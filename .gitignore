@@ -24,3 +24,4 @@ yarn-error.log*
 
 # added by dev team
 src/firebase/firebase.config.*
+src/environment

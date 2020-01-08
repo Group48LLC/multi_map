@@ -5,6 +5,7 @@ import SearchTerms from '../../components/search_terms/search_terms.component';
 
 import MapPlaceholder from '../../assets/austin_map.png';
 import ResultsPlaceHolder from '../../assets/austin_results.png';
+import MapItem from '../../components/map_item/map_item.component';
 
 const HomePage = () => (
     <div className='homepage'>
@@ -12,7 +13,7 @@ const HomePage = () => (
             <SearchTerms />
         </div>
         <div className='map'>
-            <img src={MapPlaceholder} />
+            <MapItem />
         </div>
         <div className='results-box'>
             <img src={ResultsPlaceHolder} />
