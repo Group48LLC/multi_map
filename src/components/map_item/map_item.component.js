@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react'
+import React, { Component } from 'react'
 
 import {GOOGLE_MAP_API_KEY} from '../../firebase/firebase.config';
 
