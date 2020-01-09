@@ -1,6 +1,6 @@
 import React, { Component, createRef } from 'react'
 
-import {GOOGLE_MAP_API_KEY} from '../../utilities/utilities.config';
+import {GOOGLE_MAP_API_KEY} from '../../firebase/firebase.config';
 
 class MapItem extends Component {
     constructor(props) {
