@@ -1,16 +1,80 @@
 import React from 'react';
 
-import './form_input.styles.scss';
+import { connect } from 'react-redux';
 
-const FormInput = ({ handleChange, label, ...otherProps }) => (
-    <div className="group">
-        <input className="form-input" onChange={handleChange} {...otherProps}/>
-        {label ? (<label className= 'form-input-label'
-            >
-                {label}
-            </label>
-            ) : null}
-    </div>
+import './form_input.styles.scss';
+ import { setSearchValue1, setSearchValue2, setLocationValue } from '../../redux/map/map.actions';
+import {  selectLocationValue, selectSearchValue1, selectSearchValue2 } from '../../redux/map/map.selectors';
+
+// import CustomButton from '../custom_button/custom_button.component';
+// import Checkbox from '../checkbox/checkbox.component';
+// import {addTerm} from '../../redux/map/map.actions';
+import { createStructuredSelector } from 'reselect';
+// import { selectInputValue } from '../../redux/map/map.selectors';
+
+
+
+const FormInput = ( {locationValue,searchValue1, searchValue2, ...props} ) => {
+
+    const handleSubmit = () => {
+        console.log('submit happening')
+    }
+
+    return(
+        <div className='form-input'>
+            <form onSubmit={handleSubmit}>
+                <input name='location' 
+                value={props.locationValue} 
+                onChange={props.inputChangedLocation}
+                />
+                <input name='term1' 
+                value={props.searchValue1} 
+                onChange={props.inputChangedSearchValue1}
+                /> 
+                <input name='term2' 
+                value={props.searchValue2} 
+                onChange={props.inputChangedSearchValue2}
+                />   
+                <input type='submit' />
+            </form>
+            
+        </div>
+    );
+}
+
+const mapStateToProps = createStructuredSelector(
+    {
+        locationValue: selectLocationValue,
+        searchValue1: selectSearchValue1,
+        searchValue2: selectSearchValue2
+    }
 );
 
-export default FormInput;
+const boxHelper = (e) => {
+    const myLength = e.target.value.length;
+            console.log('input--change ', e.target.value);
+            console.log(myLength)
+            if (myLength === 1){
+                console.log('Create box 2')
+
+            }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        inputChangedLocation: (e) => {
+            console.log('input--change ', e.target.value);
+            dispatch(setLocationValue(e.target.value))  
+        },
+        inputChangedSearchValue1: (e) => {
+            boxHelper(e);
+            dispatch(setSearchValue1(e.target.value))
+        },
+        inputChangedSearchValue2: (e) => {
+            console.log('input--change ', e.target.value);
+            dispatch(setSearchValue2(e.target.value))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormInput);

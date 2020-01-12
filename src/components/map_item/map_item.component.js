@@ -1,43 +1,238 @@
-import React, { Component } from 'react'
+import React from 'react';
 
-import {GOOGLE_MAP_API_KEY} from '../../firebase/firebase.config';
+import './map_item.styles.scss';
 
-class MapItem extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-        this.googleMapRef = React.createRef();
-    }
-    componentDidMount() {
-        const googleMapScript = document.createElement("script");
-        googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAP_API_KEY}&libraries=places`;
-        window.document.body.appendChild(googleMapScript);
-        googleMapScript.addEventListener("load", () => {
-            this.googleMap = this.createGoogleMap();
-            this.marker = this.createMarker();
-        });
-    }
-    createGoogleMap = () =>
-        new window.google.maps.Map(this.googleMapRef.current, {
-            zoom: 16,
-            center: { lat: 30.266666, lng: -97.733330 },
-            disableDefaultUI: true
-        });
-    createMarker = () =>
-        new window.google.maps.Marker({
-            position: { lat: 30.266666, lng: -97.733330},
-            map: this.googleMap
-        });
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
-    render() {
-        return (
-            <div
-                id="google-map"
-                ref={this.googleMapRef}
-                style={{ width: '100%', height: '100%' }}
-            />
-        )
+//import { selectSearchTerms } from '../../redux/map/map.selectors';
+
+
+import { GOOGLE_MAP_API_KEY } from '../../firebase/firebase.config';
+import { selectMapZoom, selectMapType, selectMapWidget, selectSearchValue1, selectLocationValue, selectSearchTerms } from '../../redux/map/map.selectors';
+import { setMapWidget } from '../../redux/map/map.actions';
+//import CustomButton from '../custom_button/custom_button.component';
+
+
+class MapItem extends React.Component { 
+  thing1={};
+  thing2={};
+  flag1=false;
+  //flag2=false;
+
+  onScriptLoad() {
+    this.createMap();
+  }
+  
+  createMap() {
+    const { mapZoom, mapType } = this.props;
+    const map = new window.google.maps.Map(document.getElementById('map'), {
+      center: {lat:30.267153, lng:-97.7430608},
+      zoom: mapZoom,
+      mapTypeId: mapType,
+    });
+    this.flag1=true;
+    this.thing1=map;
+  }
+
+  findPlace( location){
+
+    const map = this.thing1;
+
+    var request = {
+      query: location,
+      fields: ['name', 'geometry'],
+    };
+    const service = new window.google.maps.places.PlacesService(map);
+    service.findPlaceFromQuery(request, function(results, status) {
+      if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+          //this.createMarker(map, results[i]);
+          console.log('i= '+i)
+          console.log('findPlace , ct=' + results.length + ' Marker location = ' + results[i].geometry.location)
+        }
+        map.setCenter(results[0].geometry.location);
+      }
+    });
+  }
+   
+  createMarkers(results) {
+    const map = this.thing1;
+    const results2 = this.thing2;
+    console.log('createMarkers Length2='  + results2.length)
+    for (var i = 0; i < results2.length; i++) {
+      //this.createMarker(map, results[i]);
+      console.log('createMarkers MARKER LOCATION = ' + results2[i].geometry.location)
+      var marker = new window.google.maps.Marker({
+        map: map,
+        position: results2[i].geometry.location
+      });
+  
+      window.google.maps.event.addListener(marker, 'click', function() {
+        console.log('createMarker--FIRE')
+      });
     }
+  }
+ 
+  createMarker(map, place) {
+
+    var marker = new window.google.maps.Marker({
+      map: map,
+      position: place.geometry.location
+    });
+
+    window.google.maps.event.addListener(marker, 'click', function() {
+      console.log('createMarker--FIRE')
+    });
+  }
+  
+
+  findPlaceItems( searchTerm){
+    const map = this.thing1;
+    var results=[]
+    var request = {
+      query: searchTerm,
+      fields: ['name', 'geometry'],
+      location: map.center
+    };
+    //  locationBias: map.center,
+    const service = new window.google.maps.places.PlacesService(map);
+    service.textSearch(request, function(results, status) {
+      if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+          //this.createMarker(map, results[i]);
+          console.log('i= '+i)
+          console.log('findPlaceItems , ct=' + results.length + ' MARKER LOCATION = ' + results[i].geometry.location)
+          console.log( results[i].geometry.location)
+          console.log( results[i].name)
+          console.log( results[i])
+          var marker = new window.google.maps.Marker({
+            map: map,
+            position: results[i].geometry.location
+          });
+      
+          window.google.maps.event.addListener(marker, 'click', function() {
+            console.log('createMarker--FIRE' + marker)
+          });
+        }
+        // this.thing2=results[0];
+        // this.flag2=true;
+        // map.setCenter(results[0].geometry.location);
+      }
+    });
+    this.thing2=results;
+    return results
+  }
+
+
+  findPlaceItemsQuery( searchTerm){
+    const map = this.thing1;
+    var results=[]
+    var request = {
+      query: searchTerm,
+      fields: ['name', 'geometry'],
+      location: map.center
+    };
+    //  locationBias: map.center,
+    const service = new window.google.maps.places.PlacesService(map);
+    service.findPlaceFromQuery(request, function(results, status) {
+      if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+          //this.createMarker(map, results[i]);
+          console.log('i= '+i)
+          console.log('findPlaceItems , ct=' + results.length + ' MARKER LOCATION = ' + results[i].geometry.location)
+          console.log( results[i].geometry.location)
+          console.log( results[i].name)
+          console.log( results[i])
+          var marker = new window.google.maps.Marker({
+            map: map,
+            position: results[i].geometry.location
+          });
+      
+          window.google.maps.event.addListener(marker, 'click', function() {
+            console.log('createMarker--FIRE' + marker)
+          });
+        }
+        // this.thing2=results[0];
+        // this.flag2=true;
+        // map.setCenter(results[0].geometry.location);
+      }
+    });
+    this.thing2=results;
+    return results
+  }
+
+
+  componentDidMount() {
+
+    if (!window.google) {
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.src = `https://maps.google.com/maps/api/js?key=${GOOGLE_MAP_API_KEY}&libraries=places`;
+      var x = document.getElementsByTagName('script')[0];
+      x.parentNode.insertBefore(s, x);
+      // Below is important. 
+      //We cannot access google.maps until it's finished loading
+      s.addEventListener('load', e => {
+        this.onScriptLoad()
+        
+      })
+    } else {
+      this.createMap();
+    }
+    // let map = new window.google.maps.Map(document.getElementById('map'), {
+    //   center: {lat: -33.8688, lng: 151.2195},
+    //   zoom: 13,
+    //   mapTypeId: 'roadmap',
+    // });
+  }
+
+  render() {
+    const { locationValue ,searchValue1 ,searchTerms } = this.props;
+    if (this.flag1 ) {
+      //this.findPlace( searchValue1 + " near " + locationValue)
+      this.findPlace( locationValue)
+      if ( searchTerms.length > 0 ) {
+        // const terms = searchTerms[0] + " in " + locationValue
+        // var results = this.findPlaceItems(terms)      
+        var results = this.findPlaceItems(searchTerms[0] )
+
+        console.log('IN RENDER @@@@@ Length='  + results.length)
+        this.createMarkers(results)
+      }
+      
+    }
+    // if (this.flag2 ) {
+    //   this.createMarker(this.thing1, this.thing2);
+    // }
+     console.log('RENDER - flag=' + this.flag1 + ' loc=' + locationValue)
+     console.log(this.thing1)
+    return (
+      <div>
+        {/* <CustomButton onClick={this.findPlace(this.createMap(), props.locationValue)}></CustomButton> */}
+        <div style={{ width: 500, height: 500 }} id='map' className='map-styles' />
+      </div>
+        
+    );
+  }
+};
+const mapStateToProps = createStructuredSelector(
+  {
+    mapZoom: selectMapZoom,
+    mapType: selectMapType,
+    mapWidget: selectMapWidget,
+    locationValue: selectLocationValue,
+    searchValue1: selectSearchValue1,
+    searchTerms : selectSearchTerms
+  }
+);
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setMapWidget: (mapWidget) => {
+       dispatch(setMapWidget(mapWidget));
+    }
+ }
 }
 
-export default MapItem;
+export default connect(mapStateToProps, mapDispatchToProps)(MapItem);
