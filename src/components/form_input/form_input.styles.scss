@@ -1,3 +1,23 @@
 .form-input {
     margin: 1em;
+
+    .term1-input{
+        background-color: #6991FD;
+    }
+
+    .term2-input{
+        background-color: #00e64d;
+    }
+
+    .input-with-label{
+        display:flex;
+        font-size: 0.75em;
+        margin: 0.25em;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .label{
+        margin-right: 0.5em;
+    }
 }

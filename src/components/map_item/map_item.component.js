@@ -48,7 +48,7 @@ class MapItem extends React.Component {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
           //this.createMarker(map, results[i]);
-          console.log('i= '+i)
+          console.log( 'i= ' + i )
           console.log('findPlace , ct=' + results.length + ' Marker location = ' + results[i].geometry.location)
         }
         map.setCenter(results[0].geometry.location);
@@ -56,42 +56,43 @@ class MapItem extends React.Component {
     });
   }
    
-  createMarkers(results,titlename) {
-    const map = this.thing1;
-    const results2 = results;
-    console.log('createMarkers Length2='  + results2.length)
-    for (var i = 0; i < results2.length; i++) {
-      //this.createMarker(map, results[i]);
-      console.log('createMarkers MARKER LOCATION = ' + results2[i].geometry.location)
-      var marker = new window.google.maps.Marker({
-        map: map,
-        position: results2[i].geometry.location,
-        title:titlename
-      });
+  // createMarkers(results,titlename) {
+  //   const map = this.thing1;
+  //   const results2 = results;
+  //   console.log('createMarkers Length2='  + results2.length)
+  //   for (var i = 0; i < results2.length; i++) {
+  //     //this.createMarker(map, results[i]);
+  //     console.log('createMarkers MARKER LOCATION = ' + results2[i].geometry.location)
+  //     var marker = new window.google.maps.Marker({
+  //       map: map,
+  //       position: results2[i].geometry.location,
+  //       title:titlename
+  //     });
   
-      window.google.maps.event.addListener(marker, 'click', function() {
-        console.log('createMarker--FIRE')
-      });
-    }
-  }
+  //     window.google.maps.event.addListener(marker, 'click', function() {
+  //       console.log('createMarker--FIRE')
+  //     });
+  //   }
+  // }
  
-  createMarker(map, place) {
+  // createMarker(map, place) {
 
-    var marker = new window.google.maps.Marker({
-      map: map,
-      position: place.geometry.location
-    });
+  //   var marker = new window.google.maps.Marker({
+  //     map: map,
+  //     position: place.geometry.location
+  //   });
 
-    window.google.maps.event.addListener(marker, 'click', function() {
-      console.log('createMarker--FIRE')
-    });
-  }
+  //   window.google.maps.event.addListener(marker, 'click', function() {
+  //     console.log('createMarker--FIRE')
+  //   });
+  // }
 
-  createMarker_2(map, place, title_name) {
+  createMarker_2(map, place, title_name, hueColor) {
     var marker = new window.google.maps.Marker({
       map: map,
       position: place.geometry.location,
-      title: title_name + "-" + place.name
+      title: title_name + "-" + place.name,
+      icon: hueColor
     });
 
     window.google.maps.event.addListener(marker, 'click', function() {
@@ -100,7 +101,7 @@ class MapItem extends React.Component {
   }
   
 
-  findPlaceItems( searchTerm,titlename, create_marker_this){
+  findPlaceItems( searchTerm,titlename, create_marker_this, hueColor){
     const map = this.thing1;
     var results=[]
     var request = {
@@ -120,7 +121,7 @@ class MapItem extends React.Component {
           console.log( results[i].name)
           console.log( results[i])
          
-          create_marker_this(map, results[i], titlename) 
+          create_marker_this(map, results[i], titlename, hueColor) 
         }
         // this.thing2=results[0];
         // this.flag2=true;
@@ -132,42 +133,42 @@ class MapItem extends React.Component {
   }
 
 
-  findPlaceItemsQuery( searchTerm){
-    const map = this.thing1;
-    var results=[]
-    var request = {
-      query: searchTerm,
-      fields: ['name', 'geometry'],
-      location: map.center
-    };
-    //  locationBias: map.center,
-    const service = new window.google.maps.places.PlacesService(map);
-    service.findPlaceFromQuery(request, function(results, status) {
-      if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-        for (var i = 0; i < results.length; i++) {
-          //this.createMarker(map, results[i]);
-          console.log('i= '+i)
-          console.log('findPlaceItems , ct=' + results.length + ' MARKER LOCATION = ' + results[i].geometry.location)
-          console.log( results[i].geometry.location)
-          console.log( results[i].name)
-          console.log( results[i])
-          var marker = new window.google.maps.Marker({
-            map: map,
-            position: results[i].geometry.location
-          });
+  // findPlaceItemsQuery( searchTerm){
+  //   const map = this.thing1;
+  //   var results=[]
+  //   var request = {
+  //     query: searchTerm,
+  //     fields: ['name', 'geometry'],
+  //     location: map.center
+  //   };
+  //   //  locationBias: map.center,
+  //   const service = new window.google.maps.places.PlacesService(map);
+  //   service.findPlaceFromQuery(request, function(results, status) {
+  //     if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+  //       for (var i = 0; i < results.length; i++) {
+  //         //this.createMarker(map, results[i]);
+  //         console.log('i= '+i)
+  //         console.log('findPlaceItems , ct=' + results.length + ' MARKER LOCATION = ' + results[i].geometry.location)
+  //         console.log( results[i].geometry.location)
+  //         console.log( results[i].name)
+  //         console.log( results[i])
+  //         var marker = new window.google.maps.Marker({
+  //           map: map,
+  //           position: results[i].geometry.location
+  //         });
       
-          window.google.maps.event.addListener(marker, 'click', function() {
-            console.log('createMarker--FIRE' + marker)
-          });
-        }
-        // this.thing2=results[0];
-        // this.flag2=true;
-        // map.setCenter(results[0].geometry.location);
-      }
-    });
-    this.thing2=results;
-    return results
-  }
+  //         window.google.maps.event.addListener(marker, 'click', function() {
+  //           console.log('createMarker--FIRE' + marker)
+  //         });
+  //       }
+  //       // this.thing2=results[0];
+  //       // this.flag2=true;
+  //       // map.setCenter(results[0].geometry.location);
+  //     }
+  //   });
+  //   this.thing2=results;
+  //   return results
+  // }
 
 
   componentDidMount() {
@@ -202,18 +203,18 @@ class MapItem extends React.Component {
       if ( searchTerms.length > 0 ) {
         // const terms = searchTerms[0] + " in " + locationValue
         // var results = this.findPlaceItems(terms)      
-        var results = this.findPlaceItems(searchTerms[0],"00" , this.createMarker_2 )
+        var results = this.findPlaceItems(searchTerms[0],"00" , this.createMarker_2, 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png' )
 
         console.log('IN RENDER @@@@@ Length='  + results.length)
-        this.createMarkers(results, "1")
+        //this.createMarkers(results, "1")
       }
       if ( searchTerms.length > 1 ) {
         // const terms = searchTerms[0] + " in " + locationValue
         // var results = this.findPlaceItems(terms)      
-        var results2 = this.findPlaceItems(searchTerms[1],"11", this.createMarker_2 )
+        var results2 = this.findPlaceItems(searchTerms[1],"11", this.createMarker_2, 'http://maps.google.com/mapfiles/ms/icons/green-dot.png' )
 
         console.log('IN RENDER @@@@@ Length='  + results2.length)
-        this.createMarkers(results2, "2")
+        //this.createMarkers(results2, "2")
       }
       
       

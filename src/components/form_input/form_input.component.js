@@ -22,20 +22,30 @@ const FormInput = ( {locationValue,searchValue1, searchValue2, ...props} ) => {
 
     return(
         <div className='form-input'>
-            <form onSubmit={handleSubmit}>
-                <input name='location' 
-                value={props.locationValue} 
-                onChange={props.inputChangedLocation}
-                />
-                <input name='term1' 
-                value={props.searchValue1} 
-                onChange={props.inputChangedSearchValue1}
-                /> 
-                <input name='term2' 
-                value={props.searchValue2} 
-                onChange={props.inputChangedSearchValue2}
-                />   
-                <input type='submit' />
+            <form onSubmit={handleSubmit} >
+                <div className='input-with-label'>
+                    <label className='label'>Location</label>
+                    <input name='location' 
+                    value={props.locationValue} 
+                    onChange={props.inputChangedLocation}
+                    />
+                </div>
+                <div className='input-with-label'>
+                    <label >Search</label>
+                    <input name='term1' 
+                    className='term1-input'
+                    value={props.searchValue1} 
+                    onChange={props.inputChangedSearchValue1}
+                    /> 
+                </div>
+                <div className='input-with-label'>
+                    <label >Search</label>
+                    <input name='term2' 
+                    className='term2-input'
+                    value={props.searchValue2} 
+                    onChange={props.inputChangedSearchValue2}
+                    />
+                </div>
             </form>
             
         </div>
