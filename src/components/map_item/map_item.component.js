@@ -56,16 +56,17 @@ class MapItem extends React.Component {
     });
   }
    
-  createMarkers(results) {
+  createMarkers(results,titlename) {
     const map = this.thing1;
-    const results2 = this.thing2;
+    const results2 = results;
     console.log('createMarkers Length2='  + results2.length)
     for (var i = 0; i < results2.length; i++) {
       //this.createMarker(map, results[i]);
       console.log('createMarkers MARKER LOCATION = ' + results2[i].geometry.location)
       var marker = new window.google.maps.Marker({
         map: map,
-        position: results2[i].geometry.location
+        position: results2[i].geometry.location,
+        title:titlename
       });
   
       window.google.maps.event.addListener(marker, 'click', function() {
@@ -85,9 +86,21 @@ class MapItem extends React.Component {
       console.log('createMarker--FIRE')
     });
   }
+
+  createMarker_2(map, place, title_name) {
+    var marker = new window.google.maps.Marker({
+      map: map,
+      position: place.geometry.location,
+      title: title_name + "-" + place.name
+    });
+
+    window.google.maps.event.addListener(marker, 'click', function() {
+      console.log('createMarker_2--FIRE' + marker)
+    });
+  }
   
 
-  findPlaceItems( searchTerm){
+  findPlaceItems( searchTerm,titlename, create_marker_this){
     const map = this.thing1;
     var results=[]
     var request = {
@@ -106,14 +119,8 @@ class MapItem extends React.Component {
           console.log( results[i].geometry.location)
           console.log( results[i].name)
           console.log( results[i])
-          var marker = new window.google.maps.Marker({
-            map: map,
-            position: results[i].geometry.location
-          });
-      
-          window.google.maps.event.addListener(marker, 'click', function() {
-            console.log('createMarker--FIRE' + marker)
-          });
+         
+          create_marker_this(map, results[i], titlename) 
         }
         // this.thing2=results[0];
         // this.flag2=true;
@@ -195,11 +202,20 @@ class MapItem extends React.Component {
       if ( searchTerms.length > 0 ) {
         // const terms = searchTerms[0] + " in " + locationValue
         // var results = this.findPlaceItems(terms)      
-        var results = this.findPlaceItems(searchTerms[0] )
+        var results = this.findPlaceItems(searchTerms[0],"00" , this.createMarker_2 )
 
         console.log('IN RENDER @@@@@ Length='  + results.length)
-        this.createMarkers(results)
+        this.createMarkers(results, "1")
       }
+      if ( searchTerms.length > 1 ) {
+        // const terms = searchTerms[0] + " in " + locationValue
+        // var results = this.findPlaceItems(terms)      
+        var results2 = this.findPlaceItems(searchTerms[1],"11", this.createMarker_2 )
+
+        console.log('IN RENDER @@@@@ Length='  + results2.length)
+        this.createMarkers(results2, "2")
+      }
+      
       
     }
     // if (this.flag2 ) {
