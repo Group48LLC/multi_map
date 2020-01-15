@@ -1,8 +1,19 @@
 import { MapActionTypes } from './map.types';
 
+export const addSearchResult = item => ({
+    type: MapActionTypes.ADD_SEARCH_RESULT,
+    payload: item
+});
+export const clearSearchResults = () => ({
+    type: MapActionTypes.CLEAR_SEARCH_RESULTS
+});
+
 export const addTerm = term => ({
     type: MapActionTypes.ADD_TERM,
     payload: term
+});
+export const clearTerms = () => ({
+    type: MapActionTypes.CLEAR_TERMS
 });
 
 export const setMapWidget = ({mapWidget}) => (

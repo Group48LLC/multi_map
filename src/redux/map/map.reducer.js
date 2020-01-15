@@ -2,32 +2,53 @@ import { MapActionTypes } from './map.types';
 //import {addTermToTerms} from './map.utils';
 
 const INITIAL_STATE = {
-    search_value1: '',
-    search_value2: '',
+    search_value1: 'gates',
+    search_value2: 'yoga',
     search_terms:[],
     zoom: 13,
     map_type: 'roadmap',
-    place_id: '',
-    place_formatted: '',
     location_value: '',
-    map_widget:[{}]
+    search_results:[
+        {
+            name:'test1',
+            id:'123456',
+            formatted_address:'123 cherry lane'
+        }
+    ]
 }
 
 
 const mapReducer = ( state = INITIAL_STATE, action ) => {
     console.log('PAYLOAD---> ' + action.type +'---'+ action.payload)
     switch (action.type) {
-        case MapActionTypes.SET_MAP_WIDGET:
-            console.log('SET_MAP_WIDGET  PAYLOAD---> ' + action.payload)
+        
+        case MapActionTypes.ADD_SEARCH_RESULT:
+            if (state.search_results.length <10 ) {
+                return {
+                    ...state,
+                    search_results:[...state.search_results, action.payload]
+                }
+            } else {
+                return {
+                    ...state,
+                }
+            }
+
+        case MapActionTypes.CLEAR_SEARCH_RESULTS:
             return {
                 ...state,
-                map_widget: action.payload,
-            }
+                search_results:[]
+        }
         case MapActionTypes.ADD_TERM:
             return {
                 ...state,
                 // terms:addTermToTerms(state.terms, action.payload)
                 search_terms:[...state.search_terms, action.payload]
+            }
+        case MapActionTypes.CLEAR_TERMS:
+            return {
+                ...state,
+                search_terms:[]
             }
         case MapActionTypes.SET_SEARCH_VALUE1:
             return {

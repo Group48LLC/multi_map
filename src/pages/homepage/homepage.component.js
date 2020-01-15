@@ -6,7 +6,6 @@ import SearchBox from '../../components/search_box/search_box.component';
 
 
 import MapItem from '../../components/map_item/map_item.component';
-import MapResults from '../../components/map_results/map_results.component';
 //import MapItem2 from '../../components/map_item2/map_item2.component';
 
 const HomePage = () => {
@@ -33,9 +32,7 @@ const HomePage = () => {
         <MapItem className='map-item'
         />
         </div>
-        <div className='results-box'>
-            <MapResults />
-        </div>
+        
     </div>
     )
 };;

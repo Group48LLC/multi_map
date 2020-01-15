@@ -31,7 +31,7 @@ const FormInput = ( {locationValue,searchValue1, searchValue2, ...props} ) => {
                     />
                 </div>
                 <div className='input-with-label'>
-                    <label >Search</label>
+                    <label >Search 1</label>
                     <input name='term1' 
                     className='term1-input'
                     value={props.searchValue1} 
@@ -39,12 +39,13 @@ const FormInput = ( {locationValue,searchValue1, searchValue2, ...props} ) => {
                     /> 
                 </div>
                 <div className='input-with-label'>
-                    <label >Search</label>
+                    <label >Search 2</label>
                     <input name='term2' 
                     className='term2-input'
                     value={props.searchValue2} 
                     onChange={props.inputChangedSearchValue2}
                     />
+                    
                 </div>
             </form>
             

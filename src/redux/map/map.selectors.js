@@ -4,11 +4,10 @@ import { createSelector } from 'reselect';
 
 const selectMap = state => state.map;
 
-export const selectMapWidget = createSelector(
+export const selectSearchResults = createSelector(
     [selectMap],
-    map => map.map_widget
+    map => map.search_results
 );
-
 export const selectSearchTerms = createSelector(
     [selectMap],
     map => map.search_terms
@@ -34,13 +33,4 @@ export const selectMapType = createSelector(
     map => map.map_type
 
 );
-export const selectPlaceId = createSelector(
-    [selectMap],
-    map => map.place_id
 
-);
-export const selectPlaceFormatted = createSelector(
-    [selectMap],
-    map => map.place_formatted
-
-);
