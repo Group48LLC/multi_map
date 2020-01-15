@@ -25,26 +25,32 @@ class MapItem extends React.Component {
   flag1 = false;
   markerList = [];
   //flag2=false;
+
+  // map ref
+  googleMapRef = React.createRef()
+  googleMap = {};
   
-
-  onScriptLoad() {
-    this.createMap();
-  }
-
-  createMap() {
-    const { mapZoom, mapType } = this.props;
-    const map = new window.google.maps.Map(document.getElementById('map'), {
+  createMap = (mapZoom, mapType) => {
+    // const { mapZoom, mapType } = this.props;
+    const map = new window.google.maps.Map(this.googleMapRef.current, {
       center: { lat: 30.267153, lng: -97.7430608 },
       zoom: mapZoom,
       mapTypeId: mapType,
     });
-    this.flag1 = true;
-    this.thing1 = map;
+    // this.flag1 = true;
+    this.googleMap = map;
+    // global googleMap creation logs.
+    console.log(
+      'GLOBAL googleMap object creation logs: \n'
+      +'googleMap zoom: ' + this.googleMap.zoom+'\n'
+      +'googleMap mapTypeId: ' + this.googleMap.mapTypeId+'\n'
+    )
+    //console.log()
   }
 
   findPlace(location) {
 
-    const map = this.thing1;
+    const map = this.googleMap;
 
     var request = {
       query: location,
@@ -63,16 +69,9 @@ class MapItem extends React.Component {
     });
   }
 
-  createMarker_2(map, place, title_name, hueColor) {
-    // Extra fields ';...;'
-    // title: title_name + "-"
-    // + place.name
-    // + '--PlaceID= '
-    // + place.place_id
-    // + '--f_address= '
-    // + place.formatted_address,
+  createMarker_2(place, title_name, hueColor, googleMap) {
     let marker = new window.google.maps.Marker({
-      map: map,
+      map: googleMap,
       position: place.geometry.location,
       title: title_name + "-"
         + place.name
@@ -94,10 +93,9 @@ class MapItem extends React.Component {
   }
 
 
-  findPlaceItems(searchTerm, titlename, create_marker_this, hueColor) {
+  findPlaceItems(searchTerm, create_marker_this, titlename, hueColor) {
     const {addSearchResult} = this.props;
-    
-    const map = this.thing1;
+    const map = this.googleMap;
     let m_list = this.markerList;
     var results = []
     var request = {
@@ -124,14 +122,8 @@ class MapItem extends React.Component {
           console.log('Results== ' + item.name)
           console.log('Results== ' + item.formatted_address)
           console.log('Results== ' + item.id)
-          
-            addSearchResult(item);
-          /*
-            redux.push(results[i].name)
-            redux.push()
-            redux.push(results[i].place_id)
-          */
-          let marker = create_marker_this(map, results[i], titlename, hueColor)
+          addSearchResult(item);
+          let marker = create_marker_this(results[i], titlename, hueColor, map)
           m_list.push(marker);
         }
       }
@@ -141,7 +133,7 @@ class MapItem extends React.Component {
   }
 
   componentDidMount() {
-    
+    const {mapZoom, mapType} = this.props;
     if (!window.google) {
       var s = document.createElement('script');
       s.type = 'text/javascript';
@@ -151,53 +143,42 @@ class MapItem extends React.Component {
       // Below is important. 
       //We cannot access google.maps until it's finished loading
       s.addEventListener('load', e => {
-        this.onScriptLoad()
-
+        this.createMap(mapZoom, mapType);
       })
     } else {
-      this.createMap();
+       this.createMap(mapZoom, mapType);
+    }
+    //console.log()
+  }
+  componentDidUpdate(){
+    const {mapZoom, mapType, locationValue, searchTerms,} = this.props;
+    if(searchTerms.length > 1){
+      this.removeMarkers();
+      this.findPlace(locationValue);
+      this.findPlaceItems(
+        searchTerms[0],
+        this.createMarker_2,
+         "00",
+         'http://maps.google.com/mapfiles/ms/icons/blue-dot.png' 
+         );
+      this.findPlaceItems(
+        searchTerms[1],
+        this.createMarker_2,
+         "11",
+         'http://maps.google.com/mapfiles/ms/icons/green-dot.png' 
+         );
     }
   }
-
   render() {
-    const { locationValue, searchTerms } = this.props;
-    const {searchResults} = this.props;
-    let results=[];
-    let results2=[];
-    if (this.flag1) {
-      this.removeMarkers();
-      this.findPlace(locationValue)
-      if (searchTerms.length > 0) {
-        results = this.findPlaceItems(
-          searchTerms[0],
-           "00",
-            this.createMarker_2,
-             'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-             )
-        console.log('IN RENDER @@@@@ Length=' + results.length)
-      }
-      if (searchTerms.length > 1) {
-        results2 = this.findPlaceItems(
-          searchTerms[1],
-           "11",
-            this.createMarker_2,
-             'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-             )
-        console.log('IN RENDER @@@@@ Length=' + results2.length)
-      }
-    }
-
-    console.log('RENDER - flag=' + this.flag1 + ' loc=' + locationValue)
-    console.log(this.thing1)
     return (
       <div className='map-container'>
-        <div style={{ width: 500, height: 500 }} id='map' className='map-styles' />
-        <MapResultsDisplay />
-        {
-          searchResults.map(result => (
-            <MapItemResult item={ result } />
-        ))
-        }
+        <div 
+          style={{ width: 500, height: 500 }}
+          ref={this.googleMapRef}
+          id="map" 
+          className="map-styles" 
+        />
+        <MapResultsDisplay /> 
       </div>
 
     );

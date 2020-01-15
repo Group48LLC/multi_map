@@ -6,3 +6,14 @@ export const addTermToTerms = (terms, termToAdd) => {
     return terms
 
 };
+
+export const addSearchToResults = (searchResults, resultToAdd) => {
+    const existingSearchResult = searchResults.find(searchResult => searchResult.id === resultToAdd.id);
+
+    if(!existingSearchResult) {
+        return[...searchResults, resultToAdd]
+    }
+    else{
+        return [...searchResults]
+    }
+}

@@ -1,4 +1,5 @@
 import { MapActionTypes } from './map.types';
+import { addSearchToResults } from './map.utils';
 //import {addTermToTerms} from './map.utils';
 
 const INITIAL_STATE = {
@@ -23,10 +24,10 @@ const mapReducer = ( state = INITIAL_STATE, action ) => {
     switch (action.type) {
         
         case MapActionTypes.ADD_SEARCH_RESULT:
-            if (state.search_results.length <10 ) {
+            if (state.search_results.length <500 ) {
                 return {
                     ...state,
-                    search_results:[...state.search_results, action.payload]
+                    search_results: addSearchToResults(state.search_results, action.payload)
                 }
             } else {
                 return {
