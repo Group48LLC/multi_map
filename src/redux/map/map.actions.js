@@ -1,5 +1,17 @@
 import { MapActionTypes } from './map.types';
 
+export const setSearchFlag = () => (
+    {
+        type:MapActionTypes.SET_SEARCH_FLAG,
+    }
+);
+
+export const clearSearchFlag = () => (
+    {
+        type:MapActionTypes.CLEAR_SEARCH_FLAG,
+    }
+);
+
 export const addSearchResult = item => ({
     type: MapActionTypes.ADD_SEARCH_RESULT,
     payload: item
@@ -22,6 +34,7 @@ export const setMapWidget = ({mapWidget}) => (
         payload: mapWidget 
     }
 );
+
 export const setSearchValue1 = searchValue => (
     {
         type:MapActionTypes.SET_SEARCH_VALUE1,

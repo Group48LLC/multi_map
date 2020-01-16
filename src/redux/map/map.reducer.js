@@ -3,8 +3,9 @@ import { addSearchToResults } from './map.utils';
 //import {addTermToTerms} from './map.utils';
 
 const INITIAL_STATE = {
-    search_value1: 'gates',
-    search_value2: 'yoga',
+    search_flag:0,
+    search_value1: '',
+    search_value2: '',
     search_terms:[],
     zoom: 13,
     map_type: 'roadmap',
@@ -20,11 +21,25 @@ const INITIAL_STATE = {
 
 
 const mapReducer = ( state = INITIAL_STATE, action ) => {
-    console.log('PAYLOAD---> ' + action.type +'---'+ action.payload)
+    console.log('FIRE ===> mapReducer PAYLOAD---> ' + action.type +'---'+ action.payload)
     switch (action.type) {
         
+        case MapActionTypes.CLEAR_SEARCH_FLAG:{
+            return{
+                ...state,
+                search_flag: 0
+            }
+        }
+
+        case MapActionTypes.SET_SEARCH_FLAG:{
+            return{
+                ...state,
+                search_flag: 1
+            }
+        }
+
         case MapActionTypes.ADD_SEARCH_RESULT:
-            if (state.search_results.length <500 ) {
+            if (state.search_results.length <5 ) {
                 return {
                     ...state,
                     search_results: addSearchToResults(state.search_results, action.payload)
