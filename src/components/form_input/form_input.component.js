@@ -14,7 +14,7 @@ import { createStructuredSelector } from 'reselect';
 
 
 
-const FormInput = ( {locationValue,searchValue1, searchValue2, ...props} ) => {
+const FormInput = ( {locationValue, searchValue1, searchValue2, ...props} ) => {
 
     const handleSubmit = () => {
         console.log('submit happening')

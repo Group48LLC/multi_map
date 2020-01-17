@@ -2,23 +2,29 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { addTerm, clearTerms, clearSearchResults ,setSearchFlag} from '../../redux/map/map.actions';
+import { addTerm, clearTerms, clearSearchResults ,setSearchFlag, addLocationValue} from '../../redux/map/map.actions';
 // import { selectSearchTerms } from '../../redux/map/map.selectors';
-import { selectSearchValue1,  selectSearchValue2 } from '../../redux/map/map.selectors';
+import { selectSearchValue1,  selectSearchValue2, selectLocationValue, selectLocationList } from '../../redux/map/map.selectors';
 
 import './search_box.styles.scss';
 import CustomButton from '../custom_button/custom_button.component';
 import Checkbox from '../checkbox/checkbox.component';
 import FormInput from '../form_input/form_input.component';
 
-const SearchBox = ( {addTerm, clearTerms, clearSearchResults, setSearchFlag, ...props}) => {
+const SearchBox = ( {addLocationValue, locationValue, locationList, addTerm, clearTerms, clearSearchResults, setSearchFlag, ...props}) => {
+    
+
+    
     const handleClick = () => {
         console.log('FIRE ===> SEARCH BUTTON --'+ props.searchValue1 + '---' + props.searchValue2)
         clearTerms();
         clearSearchResults()
+        console.log('Location_ValueTO_pass== ' + locationValue)
+        addLocationValue(locationValue)
+        console.log('Location_List ==' + locationList)
         addTerm(props.searchValue1);
         addTerm(props.searchValue2);
-        setSearchFlag();
+        setSearchFlag(1);
     }
 
     
@@ -40,6 +46,8 @@ const mapStateToProps = createStructuredSelector(
     {
         searchValue1: selectSearchValue1,
         searchValue2: selectSearchValue2,
+        locationValue: selectLocationValue,
+        locationList: selectLocationList
     }
 );
 
@@ -48,7 +56,9 @@ const mapDispatchToProps = (dispatch) => {
         addTerm: (term) => dispatch(addTerm(term)),
         clearTerms: () => dispatch(clearTerms()),
         clearSearchResults: () => dispatch(clearSearchResults()),
-        setSearchFlag: () => dispatch(setSearchFlag())
+        setSearchFlag: (term) => dispatch(setSearchFlag(term)),
+        addLocationValue: (location) => dispatch(addLocationValue(location))
+        
     }//return
  }
  

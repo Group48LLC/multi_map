@@ -27,6 +27,10 @@ export const selectLocationValue = createSelector(
     [selectMap],
     map => map.location_value
 );
+export const selectLocationList = createSelector(
+    [selectMap],
+    map => map.location_list
+);
 export const selectMapZoom = createSelector(
     [selectMap],
     map => map.zoom

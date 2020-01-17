@@ -19,7 +19,7 @@ const MapResultsDisplay = ({ searchResults, ...props }) => {
             {
                 
                 searchResults.map(result => (
-                    <MapItemResult item={ result } />
+                    <MapItemResult key={result.id} item={ result } />
                 ))
             } 
             </div>

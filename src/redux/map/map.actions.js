@@ -1,8 +1,9 @@
 import { MapActionTypes } from './map.types';
 
-export const setSearchFlag = () => (
+export const setSearchFlag = (term) => (
     {
         type:MapActionTypes.SET_SEARCH_FLAG,
+        payload: term
     }
 );
 
@@ -53,4 +54,8 @@ export const setLocationValue = locationValue => (
         payload: locationValue
     }
 );
+export const addLocationValue= location => ({
+    type: MapActionTypes.ADD_LOCATION_VALUE,
+    payload: location
+});
 
