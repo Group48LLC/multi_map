@@ -7,6 +7,7 @@ const INITIAL_STATE = {
     search_value1: '',
     search_value2: '',
     search_terms:[],
+    location_list:[],
     zoom: 13,
     map_type: 'roadmap',
     location_value: '',
@@ -34,12 +35,12 @@ const mapReducer = ( state = INITIAL_STATE, action ) => {
         case MapActionTypes.SET_SEARCH_FLAG:{
             return{
                 ...state,
-                search_flag: 1
+                search_flag: action.payload
             }
         }
 
         case MapActionTypes.ADD_SEARCH_RESULT:
-            if (state.search_results.length <5 ) {
+            if (state.search_results.length < 20 ) {
                 return {
                     ...state,
                     search_results: addSearchToResults(state.search_results, action.payload)
@@ -80,6 +81,12 @@ const mapReducer = ( state = INITIAL_STATE, action ) => {
                 return {
                     ...state,
                     location_value: action.payload
+                }
+            case MapActionTypes.ADD_LOCATION_VALUE:
+                return {
+                    ...state,
+                // create utility function
+                location_list:[...state.location_list, action.payload]
                 }
         default:
             return state;

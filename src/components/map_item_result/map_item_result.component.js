@@ -16,7 +16,7 @@ const MapItemResult = ({item: { name, formatted_address, id }}) => {
             // + '--f_address= '
             // + place.formatted_address,
     return (
-        <div className='result-item-container'>
+        <div className='result-item-container' key={id}>
             <h2>{name}</h2>
             <p>{formatted_address}</p>
             <p>{id}</p>
