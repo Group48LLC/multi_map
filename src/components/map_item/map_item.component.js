@@ -44,22 +44,34 @@ class MapItem extends React.Component {
         this.removeMarkers()
         this.findPlace();
       }
-      if ((searchTerms.length > 0) && (searchFlag===3) ) {
+      if (searchFlag===3) {
+        if (searchTerms.length > 0)  {
           this.findPlaceItems(
             searchTerms[0],
-            "00",
+            "1",
             'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
             this.createMarker_2
           );
+        }
+        if (searchTerms.length > 1)  {
           this.findPlaceItems(
             searchTerms[1],
-            "11",
+            "2",
             'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            this.createMarker_2
+          ); 
+        }
+        if (searchTerms.length > 2)  {
+          this.findPlaceItems(
+            searchTerms[2],
+            "3",
+            'http://maps.google.com/mapfiles/ms/icons/orange-dot.png',
             this.createMarker_2
           );
         }
       }
     }
+  }
 
   findPlace = () => {
     console.log('FIRE ==> findPlace ')
@@ -96,7 +108,7 @@ class MapItem extends React.Component {
       icon: hueColor
     });
     window.google.maps.event.addListener(marker, 'click', function () {
-      console.log('FIRE ==> createMarker_2 -- CLICK ' + marker)
+      console.log('FIRE ==> createMarker_2 -- CLICK ' + marker.title)
     });
     this.markerList.push(marker);
     return marker;

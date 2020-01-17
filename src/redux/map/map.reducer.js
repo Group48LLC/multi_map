@@ -40,7 +40,7 @@ const mapReducer = ( state = INITIAL_STATE, action ) => {
         }
 
         case MapActionTypes.ADD_SEARCH_RESULT:
-            if (state.search_results.length < 20 ) {
+            if (state.search_results.length < 60 ) {
                 return {
                     ...state,
                     search_results: addSearchToResults(state.search_results, action.payload)
@@ -77,17 +77,25 @@ const mapReducer = ( state = INITIAL_STATE, action ) => {
                 ...state,
                 search_value2: action.payload
             }
-            case MapActionTypes.SET_LOCATION_VALUE:
+            
+        case MapActionTypes.SET_SEARCH_VALUE3:
                 return {
                     ...state,
-                    location_value: action.payload
+                    search_value3: action.payload
                 }
-            case MapActionTypes.ADD_LOCATION_VALUE:
-                return {
-                    ...state,
-                // create utility function
-                location_list:[...state.location_list, action.payload]
-                }
+
+        case MapActionTypes.SET_LOCATION_VALUE:
+            return {
+                ...state,
+                location_value: action.payload
+            }
+
+        case MapActionTypes.ADD_LOCATION_VALUE:
+            return {
+                ...state,
+            // create utility function
+            location_list:[...state.location_list, action.payload]
+            }
         default:
             return state;
     }

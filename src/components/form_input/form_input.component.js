@@ -3,8 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import './form_input.styles.scss';
- import { setSearchValue1, setSearchValue2, setLocationValue } from '../../redux/map/map.actions';
-import {  selectLocationValue, selectSearchValue1, selectSearchValue2 } from '../../redux/map/map.selectors';
+ import { setSearchValue1, setSearchValue2, setSearchValue3, setLocationValue } from '../../redux/map/map.actions';
+import {  selectLocationValue, selectSearchValue1, selectSearchValue2, selectSearchValue3 } from '../../redux/map/map.selectors';
 
 // import CustomButton from '../custom_button/custom_button.component';
 // import Checkbox from '../checkbox/checkbox.component';
@@ -14,7 +14,7 @@ import { createStructuredSelector } from 'reselect';
 
 
 
-const FormInput = ( {locationValue, searchValue1, searchValue2, ...props} ) => {
+const FormInput = ( {locationValue, searchValue1, searchValue2, searchValue3, ...props} ) => {
 
     const handleSubmit = () => {
         console.log('submit happening')
@@ -45,8 +45,16 @@ const FormInput = ( {locationValue, searchValue1, searchValue2, ...props} ) => {
                     value={props.searchValue2} 
                     onChange={props.inputChangedSearchValue2}
                     />
-                    
                 </div>
+                <div className='input-with-label'>
+                    <label >Search 3</label>
+                    <input name='term3' 
+                    className='term3-input'
+                    value={props.searchValue3} 
+                    onChange={props.inputChangedSearchValue3}
+                    />
+                </div>
+
             </form>
             
         </div>
@@ -57,7 +65,8 @@ const mapStateToProps = createStructuredSelector(
     {
         locationValue: selectLocationValue,
         searchValue1: selectSearchValue1,
-        searchValue2: selectSearchValue2
+        searchValue2: selectSearchValue2,
+        searchValue3: selectSearchValue3
     }
 );
 
@@ -78,12 +87,16 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(setLocationValue(e.target.value))  
         },
         inputChangedSearchValue1: (e) => {
-            boxHelper(e);
+            //boxHelper(e);
             dispatch(setSearchValue1(e.target.value))
         },
         inputChangedSearchValue2: (e) => {
-            console.log('input--change ', e.target.value);
+            //console.log('input--change ', e.target.value);
             dispatch(setSearchValue2(e.target.value))
+        },
+        inputChangedSearchValue3: (e) => {
+            //console.log('input--change ', e.target.value);
+            dispatch(setSearchValue3(e.target.value))
         }
     }
 }

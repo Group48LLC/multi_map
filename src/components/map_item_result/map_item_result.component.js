@@ -4,7 +4,7 @@ import './map_item_result.styles.scss';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { selectSearchTerms, selectLocationValue, selectSearchValue1, selectSearchValue2 } from '../../redux/map/map.selectors';
+import { selectSearchTerms, selectLocationValue, selectSearchValue1, selectSearchValue2, selectSearchValue3 } from '../../redux/map/map.selectors';
 
 
 const MapItemResult = ({item: { name, formatted_address, id }}) => {
@@ -17,9 +17,8 @@ const MapItemResult = ({item: { name, formatted_address, id }}) => {
             // + place.formatted_address,
     return (
         <div className='result-item-container' key={id}>
-            <h2>{name}</h2>
-            <p>{formatted_address}</p>
-            <p>{id}</p>
+            <h4>{name} {formatted_address}</h4>
+
         </div>
     );
 }
@@ -29,7 +28,8 @@ const mapStateToProps = createStructuredSelector(
         searchTerms: selectSearchTerms,
         locationValue: selectLocationValue,
         searchValue1: selectSearchValue1,
-        searchValue2: selectSearchValue2
+        searchValue2: selectSearchValue2,
+        searchValue3: selectSearchValue3
     }
 )
 
