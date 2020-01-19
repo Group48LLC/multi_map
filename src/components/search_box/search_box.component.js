@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { addTerm, clearTerms, clearSearchResults ,setSearchFlag, addLocationValue} from '../../redux/map/map.actions';
 // import { selectSearchTerms } from '../../redux/map/map.selectors';
-import { selectSearchValue1,  selectSearchValue2, selectLocationValue, selectLocationList } from '../../redux/map/map.selectors';
+import { selectSearchValue1,  selectSearchValue2, selectSearchValue3, selectLocationValue, selectLocationList } from '../../redux/map/map.selectors';
 
 import './search_box.styles.scss';
 import CustomButton from '../custom_button/custom_button.component';
@@ -16,7 +16,7 @@ const SearchBox = ( {addLocationValue, locationValue, locationList, addTerm, cle
 
     
     const handleClick = () => {
-        console.log('FIRE ===> SEARCH BUTTON --'+ props.searchValue1 + '---' + props.searchValue2)
+        console.log('FIRE ===> SEARCH BUTTON --'+ props.searchValue1 + '---' + props.searchValue2 + '---' + props.searchValue3)
         clearTerms();
         clearSearchResults()
         console.log('Location_ValueTO_pass== ' + locationValue)
@@ -24,6 +24,7 @@ const SearchBox = ( {addLocationValue, locationValue, locationList, addTerm, cle
         console.log('Location_List ==' + locationList)
         addTerm(props.searchValue1);
         addTerm(props.searchValue2);
+        addTerm(props.searchValue3);
         setSearchFlag(1);
     }
 
@@ -46,6 +47,7 @@ const mapStateToProps = createStructuredSelector(
     {
         searchValue1: selectSearchValue1,
         searchValue2: selectSearchValue2,
+        searchValue3: selectSearchValue3,
         locationValue: selectLocationValue,
         locationList: selectLocationList
     }

@@ -23,6 +23,10 @@ export const selectSearchValue2 = createSelector(
     [selectMap],
     map => map.search_value2
 );
+export const selectSearchValue3 = createSelector(
+    [selectMap],
+    map => map.search_value3
+);
 export const selectLocationValue = createSelector(
     [selectMap],
     map => map.location_value

@@ -48,6 +48,12 @@ export const setSearchValue2 = searchValue => (
         payload: searchValue
     }
 );
+export const setSearchValue3 = searchValue => (
+    {
+        type:MapActionTypes.SET_SEARCH_VALUE3,
+        payload: searchValue
+    }
+);
 export const setLocationValue = locationValue => (
     {
         type:MapActionTypes.SET_LOCATION_VALUE,
