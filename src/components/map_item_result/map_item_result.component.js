@@ -7,7 +7,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectSearchTerms, selectLocationValue, selectSearchValue1, selectSearchValue2, selectSearchValue3 } from '../../redux/map/map.selectors';
 
 
-const MapItemResult = ({item: { name, formatted_address, id }}) => {
+const MapItemResult = ({item: { name, formatted_address, id, photo, price_level, rating, user_ratings_total }}) => {
     
             // title: title_name + "-"
             // + place.name
@@ -18,6 +18,23 @@ const MapItemResult = ({item: { name, formatted_address, id }}) => {
     return (
         <div className='result-item-container' key={id}>
             <h4>{name} {formatted_address}</h4>
+            <img src={photo} alt={photo} />
+    {
+        price_level 
+        ? <p>Price Level: {price_level}</p> 
+        : ''
+    }
+    {
+        rating > 0
+        ? <p>Rating: {rating}</p> 
+        : ''
+    }
+    {
+        user_ratings_total > 0
+        ? <p>Total Ratings: {user_ratings_total}</p> 
+        : ''
+    }
+            
 
         </div>
     );

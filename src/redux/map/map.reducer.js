@@ -15,7 +15,11 @@ const INITIAL_STATE = {
         {
             name:'test1',
             id:'123456',
-            formatted_address:'123 cherry lane'
+            formatted_address:'123 cherry lane',
+            photo: 'TEST-PHOTO',
+            price_level: '$',
+            rating:'',
+            user_ratings_total: 0
         }
     ]
 }
@@ -59,7 +63,6 @@ const mapReducer = ( state = INITIAL_STATE, action ) => {
         case MapActionTypes.ADD_TERM:
             return {
                 ...state,
-                // terms:addTermToTerms(state.terms, action.payload)
                 search_terms:[...state.search_terms, action.payload]
             }
         case MapActionTypes.CLEAR_TERMS:

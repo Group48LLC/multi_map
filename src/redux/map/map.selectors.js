@@ -11,6 +11,7 @@ export const selectSearchResults = createSelector(
     [selectMap],
     map => map.search_results
 );
+
 export const selectSearchTerms = createSelector(
     [selectMap],
     map => map.search_terms
