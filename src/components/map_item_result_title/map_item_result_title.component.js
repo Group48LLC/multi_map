@@ -1,13 +1,13 @@
 import React from 'react';
 
-import './map_item_result.styles.scss';
+import './map_item_result_title.styles.scss';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectSearchTerms, selectLocationValue, selectSearchValue1, selectSearchValue2, selectSearchValue3 } from '../../redux/map/map.selectors';
 
 
-const MapItemResult = ({item: { name, formatted_address, id, photo, price_level, rating, user_ratings_total }}) => {
+const MapItemResultTitle = ({item: { name, formatted_address, id, photo, price_level, rating, user_ratings_total }}) => {
     
             // title: title_name + "-"
             // + place.name
@@ -50,4 +50,4 @@ const mapStateToProps = createStructuredSelector(
     }
 )
 
-export default connect(mapStateToProps)(MapItemResult);
+export default connect(mapStateToProps)(MapItemResultTitle);

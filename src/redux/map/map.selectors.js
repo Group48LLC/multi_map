@@ -9,8 +9,13 @@ export const selectSearchFlag = createSelector(
 );
 export const selectSearchResults = createSelector(
     [selectMap],
-    map => map.search_results
+    map => map.search_results_short
 );
+export const selectSearchResultsDetailed = createSelector(
+    [selectMap],
+    map => map.search_results_detailed 
+);
+
 
 export const selectSearchTerms = createSelector(
     [selectMap],

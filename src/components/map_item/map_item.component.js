@@ -9,11 +9,11 @@ import { GOOGLE_MAP_API_KEY } from '../../firebase/firebase.config';
 
 import {
   selectMapZoom, selectMapType,
-  selectSearchValue1, selectSearchFlag,
+  selectSearchValue1, selectSearchFlag, selectSearchResultsDetailed,
   selectSearchTerms, selectSearchResults, selectLocationList, selectLocationValue
 } from '../../redux/map/map.selectors';
 
-import { addSearchResult } from '../../redux/map/map.actions';
+import { addSearchResult, addSearchResultDetail } from '../../redux/map/map.actions';
 
 import { clearSearchFlag, setSearchFlag } from '../../redux/map/map.actions';
 
@@ -24,7 +24,8 @@ class MapItem extends React.Component {
   googleMapRef = React.createRef();
 
   createMap = () => {
-    const { mapZoom, mapType, locationValue, searchTerms, searchFlag } = this.props;
+    const { mapZoom, mapType, locationValue, searchTerms,
+       searchFlag, searchResults } = this.props;
 
     console.log('FIRE ==> createMap , searchFlag=' + searchFlag)
     if (this.googleMap == null) {
@@ -49,8 +50,9 @@ class MapItem extends React.Component {
             "1",
             'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
             this.createMarker_2,
-            this.createPhoto
+            this.getDetails
           );
+          // getDetails
         }
         if (searchTerms.length > 1) {
           this.findPlaceItems(
@@ -58,7 +60,7 @@ class MapItem extends React.Component {
             "2",
             'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
             this.createMarker_2,
-            this.createPhoto
+            this.getDetails
           );
         }
         if (searchTerms.length > 2) {
@@ -67,11 +69,15 @@ class MapItem extends React.Component {
             "3",
             'http://maps.google.com/mapfiles/ms/icons/orange-dot.png',
             this.createMarker_2,
-            this.createPhoto
+            this.getDetails
           );
         }
+        
       }
-
+      for(let i = 0; i < searchResults.length; i++){
+        this.getDetails2(searchResults[i])
+        //console.log('GET DETAILS ITEM ===>' + JSON.stringify(item, null, 2))
+      }
     }
 
   }
@@ -87,6 +93,41 @@ class MapItem extends React.Component {
       'maxHeight': 150
     })
     return photo;
+  }
+
+  getDetails2 = (item) => {
+    const {addSearchResultDetail } = this.props;
+    let map = this.googleMap;
+    let outputItem = {};
+    let callbackDone = false;
+    let request = {
+      placeId: item.id,
+      fields: ['opening_hours.weekday_text', 'reviews', 'url']
+    };
+    let service = new window.google.maps.places.PlacesService(map);
+    service.getDetails(request, function(place, status) {
+      if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+        outputItem = {
+          name: item.name,
+          formatted_address: item.formatted_address,
+          id: item.place_id,
+          photo: item.photo,
+          price_level: item.price_level,
+          rating: item.rating,
+          user_ratings_total: item.user_ratings_total,
+          opening_hours: place.opening_hours,
+          reviews: place.reviews,
+          url: place.url
+        }
+        callbackDone = true;
+      }
+      
+      if(callbackDone === true){
+        addSearchResultDetail(outputItem);
+      }
+    });
+  
+    return outputItem;
   }
 
   findPlace = () => {
@@ -105,7 +146,7 @@ class MapItem extends React.Component {
 
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         for (let i = 0; i < results.length; i++) {
-          console.log('PLACE RESULTS ==' + JSON.stringify(results[i], null, 2))
+          //console.log('PLACE RESULTS ==' + JSON.stringify(results[i], null, 2))
         }
         map.setCenter(results[0].geometry.location);
         console.log('PLACE RESULTS ==' + results[0])
@@ -141,10 +182,10 @@ class MapItem extends React.Component {
     this.markerList = [];
   }
 
-  findPlaceItems = (searchTerm, title_name, hueColor, createMarkerThis, createPhotoThis) => {
+  findPlaceItems = (searchTerm, title_name, hueColor, createMarkerThis, getDetailsThis) => {
     console.log('FIRE ==> findPlaceItems ')
 
-    const { addSearchResult, setSearchFlag } = this.props;
+    const { addSearchResult, setSearchFlag, searchResults } = this.props;
     setSearchFlag(4);
     let map = this.googleMap;
     let photoUrl = '';
@@ -158,7 +199,7 @@ class MapItem extends React.Component {
       console.log('FIRE ==> findPlaceItems CALLBACK, ' + searchTerm)
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         for (let i = 0; i < results.length; i++) {
-          console.log('RESULTS[I] == ' + JSON.stringify(results[i], null, 2))
+          //console.log('RESULTS[I] == ' + JSON.stringify(results[i], null, 2))
          
           // photo extraction
           if (results[i].photos) {
@@ -177,12 +218,16 @@ class MapItem extends React.Component {
             rating: results[i].rating,
             user_ratings_total: results[i].user_ratings_total
           }
-
-          addSearchResult(item);
+          // add ony five results to searchResults limit here
+          if(i < 5){
+            addSearchResult(item);
+          }
           createMarkerThis(results[i], title_name, hueColor);
         }
+        
       }
-    }); // end of callback
+    }); // end of textSearch callback
+    
   }
 
   componentDidMount() {
@@ -198,11 +243,11 @@ class MapItem extends React.Component {
       s.addEventListener('load', e => {
         window.document.body.appendChild(s);
         this.createMap();
-        console.log('WINDOW.GOOGLE === ' + JSON.stringify(window.google, null, 2));
+       // console.log('WINDOW.GOOGLE === ' + JSON.stringify(window.google, null, 2));
       })
     } else {
       this.createMap();
-      console.log('WINDOW.GOOGLE === ' + JSON.stringify(window.google, null, 2));
+      //console.log('WINDOW.GOOGLE === ' + JSON.stringify(window.google, null, 2));
     }
   }
 
@@ -235,7 +280,8 @@ const mapStateToProps = createStructuredSelector(
     searchValue1: selectSearchValue1,
     searchTerms: selectSearchTerms,
     searchResults: selectSearchResults,
-    searchFlag: selectSearchFlag
+    searchFlag: selectSearchFlag,
+    searchResultsDetailed: selectSearchResultsDetailed
   }
 );
 
@@ -243,7 +289,8 @@ const mapDispatchToProps = (dispatch) => (
   {
     addSearchResult: item => dispatch(addSearchResult(item)),
     clearSearchFlag: () => dispatch(clearSearchFlag()),
-    setSearchFlag: (term) => dispatch(setSearchFlag(term))
+    setSearchFlag: (term) => dispatch(setSearchFlag(term)),
+    addSearchResultDetail: item => dispatch(addSearchResultDetail(item))
   }
 );
 

@@ -2,8 +2,8 @@ import React from 'react';
 
 import './map_results_display.styles.scss';
 
-import MapItemResult from '../map_item_result/map_item_result.component';
-
+import MapItemResultTitle from '../map_item_result_title/map_item_result_title.component';
+import MapItemResultContent from '../map_item_result_content/map_item_result_content.component';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectSearchTerms, selectLocationValue, selectSearchValue1, 
@@ -20,20 +20,13 @@ const MapResultsDisplay = ({ searchResults, ...props }) => {
             {
                 
                 searchResults.map(result => (
-                    <MapItemResult key={result.id} item={result}/>
+                    <div>
+                        <MapItemResultTitle key={result.id} item={result}/>
+                        <MapItemResultContent item={result}/>
+                    </div>
                 ))
             } 
             </div>
-
-            {
-                !props.searchTerms.length
-                    ? <p>NO TERMS</p>
-                    : props.searchTerms
-                        .filter((term, index) => index < props.searchTerms.length)
-                        .map(term => (
-                            <div key={term.id}> {term} </div>
-                        ))
-            }
             <div>
                 <p>{props.locationValue}</p>
                 <p>{props.searchValue1}</p>

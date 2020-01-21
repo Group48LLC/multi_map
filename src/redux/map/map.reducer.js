@@ -1,5 +1,5 @@
 import { MapActionTypes } from './map.types';
-import { addSearchToResults } from './map.utils';
+import { addSearchToResults, addToSearchResultsDetailed } from './map.utils';
 //import {addTermToTerms} from './map.utils';
 
 const INITIAL_STATE = {
@@ -11,7 +11,7 @@ const INITIAL_STATE = {
     zoom: 13,
     map_type: 'roadmap',
     location_value: '',
-    search_results:[
+    search_results_short:[
         {
             name:'test1',
             id:'123456',
@@ -19,14 +19,18 @@ const INITIAL_STATE = {
             photo: 'TEST-PHOTO',
             price_level: '$',
             rating:'',
-            user_ratings_total: 0
+            user_ratings_total: 0,
+            // opening_hours: [],
+            // reviews: [],
+            // url: ''
         }
-    ]
+    ],
+    search_results_detailed :[]
 }
 
 
 const mapReducer = ( state = INITIAL_STATE, action ) => {
-    console.log('FIRE ===> mapReducer PAYLOAD---> ' + action.type +'---'+ action.payload)
+    console.log('FIRE ===> mapReducer PAYLOAD---> ' + JSON.stringify(action.type +'---'+ action.payload, null, 2))
     switch (action.type) {
         
         case MapActionTypes.CLEAR_SEARCH_FLAG:{
@@ -44,21 +48,26 @@ const mapReducer = ( state = INITIAL_STATE, action ) => {
         }
 
         case MapActionTypes.ADD_SEARCH_RESULT:
-            if (state.search_results.length < 60 ) {
+            if (state.search_results_short.length < 15 ) {
                 return {
                     ...state,
-                    search_results: addSearchToResults(state.search_results, action.payload)
+                    search_results_short: addSearchToResults(state.search_results_short, action.payload)
                 }
             } else {
                 return {
                     ...state,
                 }
             }
+            case MapActionTypes.ADD_SEARCH_RESULT_DETAIL:
+                return {
+                    ...state,
+                    search_results_detailed: addToSearchResultsDetailed(state.search_results_detailed, action.payload)
+                }
 
         case MapActionTypes.CLEAR_SEARCH_RESULTS:
             return {
                 ...state,
-                search_results:[]
+                search_results_short:[]
         }
         case MapActionTypes.ADD_TERM:
             return {

@@ -17,6 +17,10 @@ export const addSearchResult = item => ({
     type: MapActionTypes.ADD_SEARCH_RESULT,
     payload: item
 });
+export const addSearchResultDetail = item => ({
+    type: MapActionTypes.ADD_SEARCH_RESULT_DETAIL,
+    payload: item
+});
 export const clearSearchResults = () => ({
     type: MapActionTypes.CLEAR_SEARCH_RESULTS
 });
