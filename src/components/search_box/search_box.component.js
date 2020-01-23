@@ -8,7 +8,6 @@ import { selectSearchValue1,  selectSearchValue2, selectSearchValue3, selectLoca
 
 import './search_box.styles.scss';
 import CustomButton from '../custom_button/custom_button.component';
-import Checkbox from '../checkbox/checkbox.component';
 import FormInput from '../form_input/form_input.component';
 
 const SearchBox = ( {addLocationValue, locationValue, locationList, addTerm, clearTerms, clearSearchResults, setSearchFlag, ...props}) => {
@@ -34,7 +33,6 @@ const SearchBox = ( {addLocationValue, locationValue, locationList, addTerm, cle
     <div className='search-container'>
         <div className='refresh-container'>
             <CustomButton inverted onClick={() => handleClick()}>SEARCH</CustomButton>
-            <Checkbox />
         </div>
 
         <FormInput inputValue/>  

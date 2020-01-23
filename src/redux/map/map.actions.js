@@ -17,6 +17,14 @@ export const addSearchResult = item => ({
     type: MapActionTypes.ADD_SEARCH_RESULT,
     payload: item
 });
+// export const replaceSearchResult = (item) => ({
+//     type: MapActionTypes.REPLACE_SEARCH_RESULT,
+//     payload: item
+// })
+export const addSearchResultDetail = item => ({
+    type: MapActionTypes.ADD_SEARCH_RESULT_DETAIL,
+    payload: item
+});
 export const clearSearchResults = () => ({
     type: MapActionTypes.CLEAR_SEARCH_RESULTS
 });
@@ -27,6 +35,13 @@ export const addTerm = term => ({
 });
 export const clearTerms = () => ({
     type: MapActionTypes.CLEAR_TERMS
+});
+export const addSearchResultId = id => ({
+    type: MapActionTypes.ADD_SEARCH_RESULT_ID,
+    payload: id
+});
+export const clearSearchResultId = () => ({
+    type: MapActionTypes.CLEAR_SEARCH_RESULTS_ID_LIST
 });
 
 export const setMapWidget = ({mapWidget}) => (

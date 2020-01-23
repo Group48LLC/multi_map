@@ -70,15 +70,15 @@ const mapStateToProps = createStructuredSelector(
     }
 );
 
-const boxHelper = (e) => {
-    const myLength = e.target.value.length;
-            console.log('input--change ', e.target.value);
-            console.log(myLength)
-            if (myLength === 1){
-                console.log('Create box 2')
+// const boxHelper = (e) => {
+//     const myLength = e.target.value.length;
+//             console.log('input--change ', e.target.value);
+//             console.log(myLength)
+//             if (myLength === 1){
+//                 console.log('Create box 2')
 
-            }
-}
+//             }
+// }
 
 const mapDispatchToProps = (dispatch) => {
     return {
