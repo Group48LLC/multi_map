@@ -1,6 +1,5 @@
 import { MapActionTypes } from './map.types';
-import { addSearchToResults, addToSearchResultsDetailed } from './map.utils';
-//import {addTermToTerms} from './map.utils';
+import { addSearchToResults, addToSearchResultsDetailed, addSearchIdToList } from './map.utils';
 
 const INITIAL_STATE = {
     search_flag:0,
@@ -11,21 +10,9 @@ const INITIAL_STATE = {
     zoom: 13,
     map_type: 'roadmap',
     location_value: '',
-    search_results_short:[
-        {
-            name:'test1',
-            id:'123456',
-            formatted_address:'123 cherry lane',
-            photo: 'TEST-PHOTO',
-            price_level: '$',
-            rating:'',
-            user_ratings_total: 0,
-            // opening_hours: [],
-            // reviews: [],
-            // url: ''
-        }
-    ],
-    search_results_detailed :[]
+    search_results_short:[],
+    search_results_detailed: [],
+    search_results_id_list: []
 }
 
 
@@ -39,14 +26,12 @@ const mapReducer = ( state = INITIAL_STATE, action ) => {
                 search_flag: 0
             }
         }
-
         case MapActionTypes.SET_SEARCH_FLAG:{
             return{
                 ...state,
                 search_flag: action.payload
             }
         }
-
         case MapActionTypes.ADD_SEARCH_RESULT:
             if (state.search_results_short.length < 15 ) {
                 return {
@@ -58,17 +43,27 @@ const mapReducer = ( state = INITIAL_STATE, action ) => {
                     ...state,
                 }
             }
-            case MapActionTypes.ADD_SEARCH_RESULT_DETAIL:
-                return {
-                    ...state,
-                    search_results_detailed: addToSearchResultsDetailed(state.search_results_detailed, action.payload)
-                }
-
+        case MapActionTypes.ADD_SEARCH_RESULT_DETAIL:
+            return {
+                ...state,
+                search_results_detailed: addToSearchResultsDetailed(state.search_results_detailed, action.payload)
+            }
+        case MapActionTypes.ADD_SEARCH_RESULT_ID:
+            return {
+                ...state,
+                search_results_id_list: addSearchIdToList(state.search_results_id_list, action.payload)
+            }
+        case MapActionTypes.CLEAR_SEARCH_RESULTS_ID_LIST:
+            return {
+                ...state,
+                search_results_id_list:[]
+        }
         case MapActionTypes.CLEAR_SEARCH_RESULTS:
             return {
                 ...state,
                 search_results_short:[]
         }
+
         case MapActionTypes.ADD_TERM:
             return {
                 ...state,

@@ -44,3 +44,14 @@ export const addToSearchResultsDetailed = (searchResults, resultToAdd) => {
         return [...searchResults]
     }
 }
+
+export const addSearchIdToList = (id_list, idToAdd) => {
+    const existingID = id_list.find(id => id === idToAdd);
+
+    if(!existingID) {
+        return[...id_list, idToAdd]
+    }
+    else{
+        return [...id_list]
+    }
+}

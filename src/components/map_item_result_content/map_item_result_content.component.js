@@ -8,7 +8,10 @@ import {  } from '../../redux/map/map.selectors';
 
 
 const MapItemResultContent = ({item: { name }}) => {
+    /*
     
+    
+    */
     return(
         <div>
             Content...{name}

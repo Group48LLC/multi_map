@@ -8,13 +8,6 @@ import { selectSearchTerms, selectLocationValue, selectSearchValue1, selectSearc
 
 
 const MapItemResultTitle = ({item: { name, formatted_address, id, photo, price_level, rating, user_ratings_total }}) => {
-    
-            // title: title_name + "-"
-            // + place.name
-            // + '--PlaceID= '
-            // + place.place_id
-            // + '--f_address= '
-            // + place.formatted_address,
     return (
         <div className='result-item-container' key={id}>
             <h4>{name} {formatted_address}</h4>
