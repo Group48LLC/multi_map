@@ -13,7 +13,7 @@ import {
   selectSearchTerms, selectSearchResults, selectLocationList, selectLocationValue
 } from '../../redux/map/map.selectors';
 
-import { addSearchResult, addSearchResultDetail } from '../../redux/map/map.actions';
+import { addSearchResult, addSearchResultDetail, flagSearchResultsWithDetails } from '../../redux/map/map.actions';
 
 import { clearSearchFlag, setSearchFlag } from '../../redux/map/map.actions';
 
@@ -82,11 +82,8 @@ class MapItem extends React.Component {
     })
     return photo;
   }
-
-  
-
   getDetails2 = (id) => {
-    const {addSearchResultDetail} = this.props;
+    const {addSearchResultDetail, flagSearchResultsWithDetails} = this.props;
     let map = this.googleMap;
     let request = {
       placeId: id,
@@ -96,10 +93,12 @@ class MapItem extends React.Component {
     let service = new window.google.maps.places.PlacesService(map);
     service.getDetails(request, function(place, status) {
        if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-        addSearchResultDetail(place);
+        addSearchResultDetail({ ...place, short_id: request.placeId });
+        //console.log('PLACE_ID ===> ' + place.id)
+        flagSearchResultsWithDetails();
       }
-      return place;
     });
+    
   }
 
   findPlace = () => {
@@ -219,21 +218,20 @@ class MapItem extends React.Component {
       })
     } else {
       this.createMap();
-      //console.log('WINDOW.GOOGLE === ' + JSON.stringify(window.google, null, 2));
     }
   }
 
   componentDidUpdate() {
     console.log('FIRE ==> componentDidUpdate ')
     this.createMap();
-     const {searchResultIdList, searchFlag, setSearchFlag} = this.props;
-     for(let i = 0; i < searchResultIdList.length; i++){
+    const {searchResultIdList, searchFlag, setSearchFlag} = this.props;
+    for(let i = 0; i < searchResultIdList.length; i++){
       let myId = searchResultIdList[i];
-        if(searchFlag === 5){
+      if(searchFlag === 5){
         this.getDetails2(myId);
-        setSearchFlag(4)
-        }
-     }
+        setSearchFlag(4);
+      }
+    }
   }
 
   render() {
@@ -271,7 +269,8 @@ const mapDispatchToProps = (dispatch) => (
     addSearchResult: item => dispatch(addSearchResult(item)),
     clearSearchFlag: () => dispatch(clearSearchFlag()),
     setSearchFlag: (term) => dispatch(setSearchFlag(term)),
-    addSearchResultDetail: item => dispatch(addSearchResultDetail(item))
+    addSearchResultDetail: item => dispatch(addSearchResultDetail(item)),
+    flagSearchResultsWithDetails: () => dispatch(flagSearchResultsWithDetails())
   }
 );
 

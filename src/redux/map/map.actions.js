@@ -17,16 +17,17 @@ export const addSearchResult = item => ({
     type: MapActionTypes.ADD_SEARCH_RESULT,
     payload: item
 });
-// export const replaceSearchResult = (item) => ({
-//     type: MapActionTypes.REPLACE_SEARCH_RESULT,
-//     payload: item
-// })
+// FLAG RESULTS WITH AN ID
+export const flagSearchResultsWithDetails = () => ({
+    type: MapActionTypes.FLAG_SEARCH_RESULTS_WITH_DETAILS
+})
 export const addSearchResultDetail = item => ({
     type: MapActionTypes.ADD_SEARCH_RESULT_DETAIL,
     payload: item
 });
 export const clearSearchResults = () => ({
-    type: MapActionTypes.CLEAR_SEARCH_RESULTS
+    type: MapActionTypes.CLEAR_SEARCH_RESULTS,
+    search_results_short: [{detail_id:'', detail_flag: false}]
 });
 
 export const addTerm = term => ({

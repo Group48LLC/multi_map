@@ -20,8 +20,6 @@ export const addSearchToResults = (searchResults, resultToAdd) => {
                 priceToAdd+='$';
                 console.log(priceToAdd)
             }
-            //Object.assign(resultToAdd.price_level, priceToAdd);
-            
             resultToAdd.price_level = null;
             resultToAdd.price_level = priceToAdd;
         }
@@ -54,4 +52,26 @@ export const addSearchIdToList = (id_list, idToAdd) => {
     else{
         return [...id_list]
     }
+}
+
+export const flagResults = (search_results_short, search_results_detailed) => {
+    
+    for(let i = 0; i < search_results_short.length; i++){
+        let shortId = search_results_short[i].id;
+        let shortObj = search_results_short[i]
+        for(let j = 0; j < search_results_detailed.length; j++){
+            let detailId = search_results_detailed[j].id;
+            let otherShortId = search_results_detailed[j].short_id;
+            if(shortId === otherShortId){
+                Object.assign(search_results_short[i],
+                    {
+                        ...shortObj,
+                        detail_id: detailId ,
+                        detail_flag: true
+                    }
+                )
+            }
+        }
+    }
+    return[...search_results_short]
 }

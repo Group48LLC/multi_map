@@ -1,5 +1,5 @@
 import { MapActionTypes } from './map.types';
-import { addSearchToResults, addToSearchResultsDetailed, addSearchIdToList } from './map.utils';
+import { addSearchToResults, addToSearchResultsDetailed, addSearchIdToList, flagResults } from './map.utils';
 
 const INITIAL_STATE = {
     search_flag:0,
@@ -42,6 +42,11 @@ const mapReducer = ( state = INITIAL_STATE, action ) => {
                 return {
                     ...state,
                 }
+            }
+        case MapActionTypes.FLAG_SEARCH_RESULTS_WITH_DETAILS:
+            return {
+                ...state,
+                search_results_short: flagResults(state.search_results_short, state.search_results_detailed)
             }
         case MapActionTypes.ADD_SEARCH_RESULT_DETAIL:
             return {
