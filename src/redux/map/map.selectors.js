@@ -7,6 +7,7 @@ export const selectSearchFlag = createSelector(
     [selectMap],
     map => map.search_flag
 );
+
 export const selectSearchResults = createSelector(
     [selectMap],
     map => map.search_results_short

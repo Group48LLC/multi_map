@@ -88,7 +88,15 @@ class MapItem extends React.Component {
     let request = {
       placeId: id,
       fields: [
-        'id', 'name', 'formatted_address', 'opening_hours.weekday_text', 'reviews', 'url']
+        'id',
+        'name',
+        'formatted_address',
+        'opening_hours.weekday_text',
+        'reviews',
+        'url',
+        'website',
+        'formatted_phone_number'
+      ]
     };
     let service = new window.google.maps.places.PlacesService(map);
     service.getDetails(request, function(place, status) {
@@ -187,7 +195,8 @@ class MapItem extends React.Component {
             photo: photoUrl,
             price_level: results[i].price_level ? results[i].price_level : '',
             rating: results[i].rating,
-            user_ratings_total: results[i].user_ratings_total
+            user_ratings_total: results[i].user_ratings_total,
+            show_detail_flag:false
           }
           // searchResults limit here
           if(i < 5){

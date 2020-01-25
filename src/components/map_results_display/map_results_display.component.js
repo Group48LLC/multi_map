@@ -6,20 +6,24 @@ import MapItemResultTitle from '../map_item_result_title/map_item_result_title.c
 import MapItemResultContent from '../map_item_result_content/map_item_result_content.component';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import {addSearchResultId, setSearchFlag} from '../../redux/map/map.actions';
-import { selectSearchTerms, selectLocationValue, selectSearchValue1, selectSearchResultIdList, 
-    selectSearchValue2,selectSearchValue3, selectSearchResults,selectSearchResultsDetailed } from '../../redux/map/map.selectors';
+import {addSearchResultId, setSearchFlag, toggleShowDetails} from '../../redux/map/map.actions';
+
+import { selectSearchTerms, selectSearchResultIdList, 
+    selectSearchResults,selectSearchResultsDetailed, selectSearchFlag} from '../../redux/map/map.selectors';
+
 import { ReactComponent as DownArrow } from '../../assets/double_down_arrow.svg'; 
 
 
-const MapResultsDisplay = ({ searchResults, searchResultIdList, addSearchResultId,  setSearchFlag, ...props }) => {
+const MapResultsDisplay = ({ searchResults, showDetailsToggle, searchFlag, toggleShowDetails, searchResultIdList, addSearchResultId,  setSearchFlag, ...props }) => {
     
     const handleClick = (result) => {
-       if(result.id){
-        let id = result.id;
-        addSearchResultId(id);
-        setSearchFlag(5)
-       } 
+        
+        if(result.id){
+            let id = result.id;
+            addSearchResultId(id);
+            setSearchFlag(5)
+            toggleShowDetails(id)
+           }
        //console.log('SEARCH RESULTS ID LIST ===> ' + JSON.stringify(searchResultIdList))
     }
     return (
@@ -31,17 +35,16 @@ const MapResultsDisplay = ({ searchResults, searchResultIdList, addSearchResultI
                     <div>
                         <MapItemResultTitle  item={result}/>
                         <button> <DownArrow onClick={() => handleClick(result)}/></button>
-                        <MapItemResultContent item={result} />
+                        {
+                        (result.show_detail_flag)
+                            ?<MapItemResultContent detail_id={result.detail_id} />
+                            :''
+                        }
+                        
+                        
                     </div>
                 ))
             } 
-            </div>
-            <div>
-                <p>{props.locationValue}</p>
-                <p>{props.searchValue1}</p>
-                <p>{props.searchValue2}</p>  
-                <p>{props.searchValue3}</p>
-
             </div>
         </div>
     );
@@ -50,20 +53,18 @@ const MapResultsDisplay = ({ searchResults, searchResultIdList, addSearchResultI
 const mapStateToProps = createStructuredSelector(
     {
         searchTerms: selectSearchTerms,
-        locationValue: selectLocationValue,
-        searchValue1: selectSearchValue1,
-        searchValue2: selectSearchValue2,
-        searchValue3: selectSearchValue3,
         searchResults: selectSearchResults,
         searchResultsDetailed: selectSearchResultsDetailed,
-        searchResultIdList: selectSearchResultIdList
+        searchResultIdList: selectSearchResultIdList,
+        searchFlag: selectSearchFlag
     }
 )
 
 const mapDispatchToProps = (dispatch) => (
     {
         addSearchResultId: id => dispatch(addSearchResultId(id)),
-        setSearchFlag: (term) => dispatch(setSearchFlag(term))
+        setSearchFlag: (term) => dispatch(setSearchFlag(term)),
+        toggleShowDetails: (id) => dispatch(toggleShowDetails(id))
     }
   );
 

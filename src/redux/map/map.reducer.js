@@ -1,5 +1,5 @@
 import { MapActionTypes } from './map.types';
-import { addSearchToResults, addToSearchResultsDetailed, addSearchIdToList, flagResults } from './map.utils';
+import { addSearchToResults, addToSearchResultsDetailed, addSearchIdToList, flagResults, flagDetail } from './map.utils';
 
 const INITIAL_STATE = {
     search_flag:0,
@@ -32,17 +32,23 @@ const mapReducer = ( state = INITIAL_STATE, action ) => {
                 search_flag: action.payload
             }
         }
+        case MapActionTypes.TOGGLE_SHOW_DETAILS:{
+            return{
+                ...state,
+                search_results_short: flagDetail(state.search_results_short, action.payload)
+            }
+        }
         case MapActionTypes.ADD_SEARCH_RESULT:
-            if (state.search_results_short.length < 15 ) {
+            // if (state.search_results_short.length < 15 ) {
                 return {
                     ...state,
                     search_results_short: addSearchToResults(state.search_results_short, action.payload)
                 }
-            } else {
-                return {
-                    ...state,
-                }
-            }
+            // } else {
+            //     return {
+            //         ...state,
+            //     }
+            // }
         case MapActionTypes.FLAG_SEARCH_RESULTS_WITH_DETAILS:
             return {
                 ...state,
@@ -67,6 +73,11 @@ const mapReducer = ( state = INITIAL_STATE, action ) => {
             return {
                 ...state,
                 search_results_short:[]
+        }
+        case MapActionTypes.CLEAR_SEARCH_RESULTS_DETAILS:
+            return {
+                ...state,
+                search_results_detailed:[]
         }
 
         case MapActionTypes.ADD_TERM:

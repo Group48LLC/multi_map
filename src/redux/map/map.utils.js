@@ -75,3 +75,19 @@ export const flagResults = (search_results_short, search_results_detailed) => {
     }
     return[...search_results_short]
 }
+
+export const flagDetail = (search_results_short, id) => {
+    let returnObject = {}
+    for (let i = 0; i < search_results_short.length; i++){
+        Object.assign(returnObject, {...search_results_short[i]})
+        if(search_results_short[i].id === id){
+            Object.assign(search_results_short[i],
+                {
+                    ...returnObject,
+                    show_detail_flag: !search_results_short[i].show_detail_flag
+                }
+            )
+        }
+    }
+    return [...search_results_short]
+}

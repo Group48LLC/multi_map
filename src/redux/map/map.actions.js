@@ -6,6 +6,12 @@ export const setSearchFlag = (term) => (
         payload: term
     }
 );
+export const toggleShowDetails = (id) => (
+    {
+        type:MapActionTypes.TOGGLE_SHOW_DETAILS,
+        payload: id
+    }
+);
 
 export const clearSearchFlag = () => (
     {
@@ -27,7 +33,11 @@ export const addSearchResultDetail = item => ({
 });
 export const clearSearchResults = () => ({
     type: MapActionTypes.CLEAR_SEARCH_RESULTS,
-    search_results_short: [{detail_id:'', detail_flag: false}]
+    search_results_short: []
+});
+export const clearSearchResultsDetails = () => ({
+    type: MapActionTypes.CLEAR_SEARCH_RESULTS_DETAILS,
+    search_results_detailed: []
 });
 
 export const addTerm = term => ({
