@@ -1,27 +1,22 @@
 .homepage {
     display:flex;
+    flex-wrap: wrap;
     width:100%;
     height:100%;
+    justify-content: center;
 
     .search-box {
-        img{
-            width:100%;
-            height:100%;
-        }
+        justify-content: center;
     }
 
     .map-container {
-      width: 100%;
-      height: 100%;  
+      width: 450px;
+      height: 500px;
+      margin: 1%; 
     }
 
     .results-box{
-        flex-grow:20;
         
-        img{
-            width:30%;
-            height:100%;
-        }
     }
     
 }

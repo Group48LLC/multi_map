@@ -1,25 +1,47 @@
 .form-input {
-    margin: 1em;
+    display:flex;
+    flex-direction: column;
 
-    .term1-input{
-        background-color: #6991FD;
-    }
-
-    .term2-input{
-        background-color: #00e64d;
-    } 
-    
-    .term3-input{
-        background-color: #a5852e;
-    }
-
-    .input-with-label{
+    form {
         display:flex;
-        font-size: 0.75em;
-        margin: 0.25em;
-        justify-content: space-between;
-        flex-wrap: wrap;
+    flex-direction: column;
     }
+    .input-container{
+        display: flex;
+        align-items: flex-end;
+    }
+    img{
+        height:10%;
+        width:10%;
+        margin-right: 5%;
+       
+    }
+
+        .city-icon{
+            margin-right: 5%;
+        }
+
+
+    // .term1-input{
+    //     background-color: #6991FD;
+        
+    // }
+
+    // .term2-input{
+    //     background-color: #00e64d;
+    // } 
+    
+    // .term3-input{
+    //     background-color: #a5852e;
+    // }
+
+    // .input-with-label{
+    //     display:flex;
+    //     font-size: 0.75em;
+    //     margin: 0.25em;
+    //     justify-content: space-between;
+    //     flex-wrap: wrap;
+    // }
 
     .label{
         margin-right: 0.5em;

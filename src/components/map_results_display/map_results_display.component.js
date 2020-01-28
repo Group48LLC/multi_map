@@ -27,7 +27,7 @@ const MapResultsDisplay = ({ searchResults, showDetailsToggle, searchFlag, toggl
        //console.log('SEARCH RESULTS ID LIST ===> ' + JSON.stringify(searchResultIdList))
     }
     return (
-        <div>
+        <div className="result">
             <div>
             {
                 
@@ -39,9 +39,7 @@ const MapResultsDisplay = ({ searchResults, showDetailsToggle, searchFlag, toggl
                         (result.show_detail_flag)
                             ?<MapItemResultContent detail_id={result.detail_id} />
                             :''
-                        }
-                        
-                        
+                        }    
                     </div>
                 ))
             } 

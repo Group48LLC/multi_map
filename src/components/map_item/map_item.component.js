@@ -244,16 +244,19 @@ class MapItem extends React.Component {
   }
 
   render() {
+    
     console.log('FIRE ==> render ')
     return (
-      <div className='map-container'>
+      
+        
         <div
-          style={{ width: 600, height: 700 }}
+          style={{"height":"100%", "width":"100%"}}
           ref={this.googleMapRef}
           id="map"
-          className="map-styles"
+          className="map-style"
         />
-      </div>
+   
+        
 
     );
   }

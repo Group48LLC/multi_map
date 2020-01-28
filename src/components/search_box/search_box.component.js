@@ -33,11 +33,13 @@ const SearchBox = ( {addLocationValue, clearSearchResultId, locationValue, locat
 
     return(
     <div className='search-container'>
+        
+        <FormInput inputValue/> 
+        
         <div className='refresh-container'>
             <CustomButton inverted onClick={() => handleClick()}>SEARCH</CustomButton>
         </div>
 
-        <FormInput inputValue/>  
 
     </div>
     );

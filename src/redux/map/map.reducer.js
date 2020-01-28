@@ -7,7 +7,7 @@ const INITIAL_STATE = {
     search_value2: '',
     search_terms:[],
     location_list:[],
-    zoom: 13,
+    zoom: 11,
     map_type: 'roadmap',
     location_value: '',
     search_results_short:[],
