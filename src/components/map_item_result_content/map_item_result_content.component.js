@@ -20,7 +20,7 @@ class MapItemResultContent extends React.Component  {
     id = '';
     reviews = [];
     
-    buildDetails= () => {
+    buildDetails = () => {
         const {detail_id, searchResultsDetailed} = this.props;
         for(let i = 0; i < searchResultsDetailed.length; i++){
             if(searchResultsDetailed[i].id === detail_id){
