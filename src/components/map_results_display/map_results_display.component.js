@@ -30,7 +30,7 @@ const MapResultsDisplay = ({ searchResults, showDetailsToggle, searchFlag, toggl
         <div className="result">
             <div>
             {
-                
+
                 searchResults.map(result => (
                     <div>
                         <MapItemResultTitle  item={result}/>
