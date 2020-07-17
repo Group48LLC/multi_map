@@ -1,10 +1,11 @@
 import { MapActionTypes } from './map.types';
 import { addSearchToResults, addToSearchResultsDetailed, addSearchIdToList } from './map.utils';
-
 const INITIAL_STATE = {
     search_flag:0,
     search_value1: '',
     search_value2: '',
+    search_value3: '',
+    //search_value4: '',
     search_terms:[],
     location_list:[],
     zoom: 13,

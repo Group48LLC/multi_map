@@ -1,8 +1,11 @@
 .homepage {
     display:flex;
-    width:100%;
-    height:100%;
+    flex-direction:column;
+    justify-content:center;
+    background-color:#C0C0C0;
+    padding-top:1em;
 
+    
     .search-box {
         img{
             width:100%;
@@ -10,7 +13,8 @@
         }
     }
 
-    .map-container {
+    .map {
+      margin-left:10px;
       width: 100%;
       height: 100%;  
     }

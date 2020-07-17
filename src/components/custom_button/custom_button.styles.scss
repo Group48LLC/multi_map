@@ -14,14 +14,14 @@
     font-size: 1em;
 
     &:hover{
-        background-color: rgb(49, 222, 245);
+        background-color: #4169E1;
     }
 
     &.inverted {
-        background-color: rgb(49, 222, 245);
+        background-color: #00008B;
 
         &:hover{
-            background-color: orangered;
+            background-color: #4169E1;
         }
     }
 }

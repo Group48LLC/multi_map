@@ -16,43 +16,52 @@ import { createStructuredSelector } from 'reselect';
 
 const FormInput = ( {locationValue, searchValue1, searchValue2, searchValue3, ...props} ) => {
 
-    const handleSubmit = () => {
-        console.log('submit happening')
-    }
+    
 
     return(
         <div className='form-input'>
-            <form onSubmit={handleSubmit} >
-                <div className='input-with-label'>
+            <form onSubmit={() => console.log('suuuuuuubbbbbmmmmiiiit')} >
+                <div className='input-with-label' >
                     <label className='label'>Location</label>
-                    <input name='location' 
-                    value={props.locationValue} 
-                    onChange={props.inputChangedLocation}
-                    />
+                    <div className='input-box'>
+                        <input name='location'
+                        value={props.locationValue} 
+                        onChange={props.inputChangedLocation}
+                        />
+                    </div>
                 </div>
                 <div className='input-with-label'>
                     <label >Search 1</label>
-                    <input name='term1' 
-                    className='term1-input'
-                    value={props.searchValue1} 
-                    onChange={props.inputChangedSearchValue1}
-                    /> 
+                    <div className='input-box'>
+                        <input name='term1'
+                        value={props.searchValue1} 
+                        onChange={props.inputChangedSearchValue1}
+                        />
+                        <img src="http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+                        />
+                    </div>
                 </div>
                 <div className='input-with-label'>
                     <label >Search 2</label>
-                    <input name='term2' 
-                    className='term2-input'
-                    value={props.searchValue2} 
-                    onChange={props.inputChangedSearchValue2}
-                    />
+                    <div className='input-box'>
+                        <input name='term2'
+                        value={props.searchValue2} 
+                        onChange={props.inputChangedSearchValue2}
+                        />
+                        <img src="http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+                        />
+                    </div>
                 </div>
                 <div className='input-with-label'>
                     <label >Search 3</label>
-                    <input name='term3' 
-                    className='term3-input'
-                    value={props.searchValue3} 
-                    onChange={props.inputChangedSearchValue3}
-                    />
+                    <div className='input-box'>
+                        <input name='term3'
+                        value={props.searchValue3} 
+                        onChange={props.inputChangedSearchValue3}
+                        />
+                        <img src="http://maps.google.com/mapfiles/ms/icons/orange-dot.png"
+                        />
+                    </div>
                 </div>
 
             </form>

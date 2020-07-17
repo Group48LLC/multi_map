@@ -156,7 +156,6 @@ class MapItem extends React.Component {
 
   findPlaceItems = (searchTerm, title_name, hueColor, createMarkerThis, getDetailsThis) => {
     console.log('FIRE ==> findPlaceItems ')
-
     const { addSearchResult, setSearchFlag} = this.props;
     setSearchFlag(4);
     let map = this.googleMap;
@@ -172,7 +171,6 @@ class MapItem extends React.Component {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         for (let i = 0; i < results.length; i++) {
           //console.log('RESULTS[I] == ' + JSON.stringify(results[i], null, 2))
-         
           // photo extraction
           if (results[i].photos) {
             photoUrl = results[i].photos[0].getUrl({
@@ -196,10 +194,8 @@ class MapItem extends React.Component {
           }
           createMarkerThis(results[i], title_name, hueColor);
         }
-        
       }
     }); // end of textSearch callback
-    
   }
 
   componentDidMount() {
@@ -238,16 +234,17 @@ class MapItem extends React.Component {
 
   render() {
     console.log('FIRE ==> render ')
+    const mystyle = {
+      height: '100vh', 
+      width: '90vw'
+    };
     return (
-      <div className='map-container'>
         <div
-          style={{ width: 600, height: 700 }}
+          style={mystyle}
           ref={this.googleMapRef}
           id="map"
           className="map-styles"
         />
-      </div>
-
     );
   }
 };

@@ -1,27 +1,45 @@
 .form-input {
-    margin: 1em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left:2px;
 
-    .term1-input{
-        background-color: #6991FD;
+    input{
+    float: left;
+    width: 80%;
+    height: 40px;
+    padding: 0 10px;
+    border: 0;
+    border-bottom: 2px solid black;
+    background-color:transparent;
+    color: black;
+    font-family: 'Indie Flower', cursive;
+    font-size: 1.25em;
+    position: relative;
+    z-index: 99;
+    &:focus{
+      outline: 0;
+      border-bottom: 3px solid rgb(44, 93, 253);
+      height:45px;
+      width:85%;
     }
 
-    .term2-input{
-        background-color: #00e64d;
-    } 
     
-    .term3-input{
-        background-color: #a5852e;
+  }
+    .input-box{
+        display:flex;
+        flex-direction:row;
+        align-items:center;
     }
-
     .input-with-label{
         display:flex;
-        font-size: 0.75em;
+        font-size: 1em;
         margin: 0.25em;
-        justify-content: space-between;
-        flex-wrap: wrap;
-    }
-
-    .label{
-        margin-right: 0.5em;
+        flex-direction:column;
+        justify-content:center;
+        font-family: 'Indie Flower', cursive;
+        img{
+            width:1.35em;
+            height:1em;
+        }
     }
 }

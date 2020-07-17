@@ -14,15 +14,12 @@ const HomePage = () => {
         <div className='search-box'>
             <SearchBox />
         </div> 
-        
-        <div className='map-container'>
-            <MapItem className='map-item'
-            />
+        <div className='map'>
+            <MapItem />
         </div>
         <div className='results-container'>
             <MapResultsDisplay />
         </div>
-        
     </div>
     )
 };;
