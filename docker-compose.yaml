@@ -1,9 +1,0 @@
-version: '3'
-services: 
-    frontend:
-        build: 
-            context: .
-            dockerfile: frontend.Dockerfile
-        container_name: frontend_mm1
-        ports:
-            - "8000:8080"
